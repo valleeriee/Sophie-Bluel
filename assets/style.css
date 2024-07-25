@@ -223,7 +223,8 @@ footer nav ul {
 	transition: all 0.3s;
 }
 
-.filtre-btn:hover {
+.filtre-btn:hover, 
+.filtre-on {
 	background-color: var(--secondary-color);
 	color: var(--white-color);
 }
