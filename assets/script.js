@@ -14,7 +14,7 @@ function displayButtonReset() {
 async function displayCategoriesButtons() {
   const categories = await fetchCategories()
 
-  //const categoriesSet = new Set(categories);
+  // Utilisation de l'objet Set ? const categoriesSet = new Set(categories);
   
   const portfolio = document.getElementById("portfolio")
   
