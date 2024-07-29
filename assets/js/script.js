@@ -19,7 +19,7 @@ async function displayCategoriesButtons() {
   const portfolio = document.getElementById("portfolio")
   
   let filtres = document.createElement("div")
-  filtres.classList.add("filtres")
+  filtres.classList.add("filtres", "hide-logged")
   portfolio.insertBefore(filtres, gallery)
 
   for (let i = 0; i < categories.length; i++) {

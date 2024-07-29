@@ -52,6 +52,11 @@ a {
 	outline: none;
 	transition: all 0.3s;
 }
+button {
+    background: none;
+    border: none;
+	cursor: pointer;
+}
 /** end reset css**/
 
 /* variables declaration */
@@ -86,7 +91,7 @@ header {
 	padding: 50px 0;
 }
 section {
-	margin: 50px 0;
+	margin: 140px 0 57px;
 }
 
 h1{
@@ -104,11 +109,18 @@ h1 > span {
 	letter-spacing: 0.1em;
 }
 
-h2{
+h2 {
 	font-family: var(--secondary-font);
 	font-weight: 700;
 	font-size: 30px;
 	color: var(--secondary-color);
+}
+
+.hidetext {
+	font-size: 0px;
+	line-height: 0px;
+	text-indent: -9999px;
+	display: block;
 }
 
 /* menu */
@@ -167,8 +179,34 @@ nav a:hover {
 
 /* portfolio */
 #portfolio h2 {
+	position: relative;
 	text-align: center;
 	margin-bottom: 1em;
+}
+
+.logged #portfolio h2 {
+	margin-bottom: 2em;
+}
+
+#portfolio h2 a {
+    align-items: center;
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	margin-left: 30px;
+	font-family: var(--primary-font);
+	font-size: 14px;
+	color: var(--black-color);
+	font-weight: 400;
+}
+
+.logged #portfolio h2 .show-logged {
+	display: inline-flex;
+}
+
+#portfolio h2 i {
+	margin-right: 11px;
+	font-size: 16px;
 }
 
 .gallery {

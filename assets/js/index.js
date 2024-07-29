@@ -3,12 +3,10 @@ window.onload = (event) => {
     const connection = window.localStorage.getItem("Connection");
     console.log(connection)
   
-    if (connection === null) {
-      /* Code de récupération des pièces depuis l’API HTTP */
-    } else {
-      const indexBody = document.querySelector("body")
-      indexBody.classList.add("logged")
-    }
+    if (connection === null) return
+
+    const indexBody = document.querySelector("body")
+    indexBody.classList.add("logged")
 };
 
 function ajoutListenerLogout() {
