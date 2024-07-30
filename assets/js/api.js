@@ -17,3 +17,8 @@ async function fetchWorks() {
       return []
     }
 }
+
+// Appel de la fonction fetch avec toutes les informations nécessaires
+function postLogin() {
+  
+}

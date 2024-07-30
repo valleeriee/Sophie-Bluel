@@ -1,7 +1,6 @@
 // chargement de la homepage logged ou non logged
 window.onload = (event) => {
     const connection = window.localStorage.getItem("Connection");
-    console.log(connection)
   
     if (connection === null) return
 

@@ -1,5 +1,5 @@
-let modal = null
-// let modal = null ou let modal = "" ??
+// Affichage de la modale
+let modal = null // let modal = null ou let modal = "" ??
 
 const btnClose = document.querySelector(".js-modal-close")
 const stopClose = document.querySelector(".js-modal-stop")
@@ -19,7 +19,6 @@ const openModal = (event) => {
 
 const closeModal = (event) => {
     event.preventDefault()
-    console.log(modal)
     modal.style.display = "none"
     modal.setAttribute("aria-hidden", "none")
     modal.removeAttribute("aria-modal")
@@ -38,3 +37,48 @@ window.addEventListener("keydown", (event) => {
         closeModal(event)
     }
 })
+
+
+// Affichage des travaux
+const galleryModal = document.querySelector(".gallery-modal")
+let worksModal = []
+
+async function displayWorksModal(works) {
+    if (!works) {
+      works = await fetchWorks()
+    }
+    galleryModal.innerHTML = ""
+    const htmlDelete = `<span class="delete"><i class="fa-solid fa-trash-can"></i></span>`
+  
+    for (let i = 0; i < works.length; i++) {
+      let div = document.createElement("div")
+      div.classList.add("work-modal")
+      let image = document.createElement("img")
+      image.src = works[i].imageUrl
+      image.alt = works[i].title
+  
+      div.innerHTML = htmlDelete
+      div.appendChild(image)
+      galleryModal.appendChild(div)
+    }
+
+    deleteWork()
+}
+
+// Supprimer un element
+function deleteWork() {
+
+    let listWorks = document.querySelectorAll(".work-modal")
+    
+    for (let i = 0; i < listWorks.length; i++) {
+        listWorks[i].addEventListener("click", async (event) => {
+            let response = await fetch("http://localhost:5678/api/works/" + i, {
+                method: "DELETE",
+            });
+            let result = await response.json();
+            console.log(result)
+        })
+    }
+}
+
+displayWorksModal()

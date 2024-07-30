@@ -3,8 +3,8 @@
 // password: S0phie 
 
 const compteId = {
-    emailLogin: "sophie.bluel@test.tld",
-    pwdLogin: "S0phie"
+    email: "sophie.bluel@test.tld",
+    password: "S0phie"
 }
 
 // Envoi des valeurs du formulaire
@@ -18,14 +18,21 @@ function ajoutListenerLogin() {
 
         // Création de l’objet login
         const loginId = {
-            emailLogin: event.target.querySelector("[name=email-login]").value,
-            pwdLogin: event.target.querySelector("[name=pwd-login]").value
+            email: event.target.querySelector("[name=email-login]").value,
+            password: event.target.querySelector("[name=pwd-login]").value
         }
 
-        if ((loginId.emailLogin === compteId.emailLogin) && (loginId.pwdLogin === compteId.pwdLogin)) {
+        const chargeUtile = JSON.stringify(loginId);
+
+        if ((loginId.email === compteId.email) && (loginId.password === compteId.password)) {
             isLogged = true
             window.location.href = "index.html"
             window.localStorage.setItem("Connection", isLogged);
+            /*fetch("http://localhost:5678/api/users/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: chargeUtile
+            });*/
         } else {
             const erreur = document.createElement("p")
             erreur.innerText = "Erreur dans l’identifiant ou le mot de passe"

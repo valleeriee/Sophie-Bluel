@@ -18,6 +18,7 @@
     padding: 60px 105px 45px;
     background-color: var(--white-color);
     border-radius: 10px;
+    text-align: center;
     overflow: auto;
 }
 
@@ -33,5 +34,133 @@
     font-size: 26px;
     color: var(--black-color);
     font-weight: 400;
+}
+
+.modal .cta {
+    border-top: 1px solid var(--border-color);
     text-align: center;
+}
+
+.modal .formulaire .cta {
+    margin-top: 47px;
+}
+
+.modal .btn, 
+.modal input[type="submit"] {
+    width: 237px;
+    margin-top: 2.8em;
+    margin-bottom: 0;
+    font-size: 14px;
+}
+
+/* vue "Galerie photo" */
+.gallery-modal {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 29px 9px;
+    width: 100%;
+    padding: 46px 0 67px;
+}
+
+.work-modal {
+    position: relative;
+    cursor: pointer;
+}
+
+.work-modal img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+.work-modal .delete {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 6px;
+    right: 5px;
+    width: 17px;
+    height: 17px;
+    background-color: var(--black-color);
+}
+
+.work-modal .delete i {
+    font-size: 10px;
+    color: var(--white-color);
+}
+
+/* vue "Ajout photo" */
+#step-2 {
+    display: none;
+}
+
+.ajout-photo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    height: 170px;
+    background-color: var(--photo-bg);
+    border-radius: 3px;
+}
+
+.ajout-photo i {
+    font-size: 68px;
+    color: var(--photo-icon);
+}
+
+.ajout-photo .format {
+    font-size: 10px;
+    color: var(--photo-txt);
+}
+
+.formulaire .select-photo {
+    margin: 12px 0 7px;
+}
+
+.select-photo span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 173px;
+    height: 36px;
+    background-color: var(--photo-btn-bg);
+    border-radius: 36px;
+    color: var(--photo-btn-txt);
+    font-weight: 500;
+}
+
+.select-photo input[type=file] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    opacity: 0;
+}
+
+.formulaire .select {
+    width: 100%;
+	appearance: none;
+    cursor: pointer;
+}
+
+.select-wrapper {
+    position: relative;
+}
+
+.select-wrapper::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 22px;
+    width: 11px;
+    height: 7px;
+    background: url(/assets/icons/chevron.png) no-repeat;
+    background-size: 100% 100%;
+    display: block;
 }

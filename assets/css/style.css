@@ -68,7 +68,15 @@ button {
 	--black-color: #000;
 	--hover-color: #0E2F28;
 	--bg-color: #FFFEF8;
+	--border-color: #B3B3B3;
 	--error-color: red;
+	--disabled-color: #A7A7A7;
+
+	--photo-bg: #E8F1F6;
+	--photo-icon: #B9C5CC;
+	--photo-btn-bg: #CBD6DC;
+	--photo-btn-txt: #306685;
+	--photo-txt: #444;
 
 	--primary-font: 'Work Sans';
 	--secondary-font: 'Syne';
@@ -244,14 +252,15 @@ nav a:hover {
 }
 
 #contact .formulaire, 
-#login .formulaire {
+#login .formulaire, 
+.modal .formulaire {
 	text-align: left;
-	margin-top:30px;
+	margin-top: 34px;
 	display: flex;
 	flex-direction: column;
 }
 
-.formulaire input {
+.formulaire .input {
 	height: 50px;
 	padding: 0 10px;
 	font-size: 1.2em;
@@ -282,23 +291,30 @@ nav a:hover {
 	color: var(--error-color);
 }
 
-input[type="submit"] {
-	width: 179px;
-	height: 36px;
-	font-family: var(--secondary-font);
-	font-weight: 700;
-	color: var(--white-color);
-	background-color: var(--secondary-color);
-	margin : 2em auto 105px;
+input[type="submit"], 
+.btn {
 	width: 180px;
-	text-align: center;
+	height: 36px;
+	margin : 2em auto 105px;
+	background-color: var(--secondary-color);
+	border: none;
 	border-radius: 60px ;
+	font-family: var(--secondary-font);
+	color: var(--white-color);
+	font-weight: 700;
+	text-align: center;
 	cursor: pointer;
 	transition: all 0.3s;
 }
 
-input[type="submit"]:hover {
+input[type="submit"]:hover, 
+.btn:hover {
 	background-color: var(--hover-color);
+}
+
+input[type="submit"]:disabled {
+	background-color: var(--disabled-color);
+	cursor: default;
 }
 
 /* footer */
