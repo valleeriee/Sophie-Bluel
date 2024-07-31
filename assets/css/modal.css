@@ -95,6 +95,13 @@
     display: none;
 }
 
+.btn-back {
+    position: absolute;
+    top: 24px;
+    left: 26px;
+    font-size: 24px;
+}
+
 .ajout-photo {
     display: flex;
     flex-direction: column;

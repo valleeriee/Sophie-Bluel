@@ -70,43 +70,59 @@ function deleteWork() {
 
     let listWorks = document.querySelectorAll(".work-modal")
     const token = window.localStorage.getItem("Token")
-    console.log(listWorks)
     
     for (let work of listWorks) {
         work.addEventListener("click", async (event) => {
             let workId = event.currentTarget.dataset.id
-            console.log(workId)
 
             try {
-                const response = await fetch(`http://localhost:5678/api/works/${workId}/`, {
-                    method: "DELETE",
-                    headers: {"Authorization": `Bearer ${token}`}
-                })
-                const data = await response.json();
-                console.log(data);
-                if (!response.ok) {
-                    throw new Error("Suppression échec");
+                const confirm = window.confirm("Supprimer ?")
+                if (confirm) {
+                    const response = await fetch(`http://localhost:5678/api/works/${workId}/`, {
+                        method: "DELETE",
+                        headers: {"Authorization": `Bearer ${token}`}
+                    })
+                    if (!response.ok) {
+                        throw new Error("Suppression échec")
+                    }
+                    console.log('Suppression ok')
+                    work.style.display = "none"
+                    displayWorks()
                 }
-
-                console.log('Suppression ok');
             } catch (error) {
-                console.error("La suppression a échoué :", error);
+                console.error("La suppression a échoué :", error)
             }
         })
     }
 }
 
-// Ajouter un element
-function addWork() {
+// Navigation entre les 2 écrans de la modale
+function navModal() {
     const btnNext = document.getElementById("js-next")
+    const btnBack = document.getElementById("js-back")
+
+    const btnModal = document.querySelectorAll(".nav-modal")
     const showGallery = document.getElementById("showGallery")
     const showAddPhoto = document.getElementById("showAddPhoto")
 
-    btnNext.addEventListener("click", () => {
-        showGallery.style.display = "none"
-        showAddPhoto.style.display = "block"
-    })
+    for (let btn of btnModal) {
+        btn.addEventListener("click", () => {
+            let btnId = btn.id
+
+            switch(btnId) {
+                case 'js-next':
+                    showGallery.style.display = "none"
+                    showAddPhoto.style.display = "block"
+                    break
+            
+                case 'js-back':
+                    showGallery.style.display = "block"
+                    showAddPhoto.style.display = "none"
+                    break
+            }
+        })
+    }
 }
 
 displayWorksModal()
-addWork()
+navModal()
