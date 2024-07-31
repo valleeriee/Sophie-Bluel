@@ -4,6 +4,9 @@ let modal = null // let modal = null ou let modal = "" ??
 const btnClose = document.querySelector(".js-modal-close")
 const stopClose = document.querySelector(".js-modal-stop")
 
+const showGallery = document.getElementById("showGallery")
+const showAddPhoto = document.getElementById("showAddPhoto")
+
 const openModal = (event) => {
     event.preventDefault()
     const getUrl = event.target.getAttribute("href")
@@ -15,6 +18,8 @@ const openModal = (event) => {
     modal.addEventListener("click", closeModal)
     btnClose.addEventListener("click", closeModal)
     stopClose.addEventListener("click", (event) => event.stopPropagation())
+    showGallery.style.display = "block"
+    showAddPhoto.style.display = "none"
 }
 
 const closeModal = (event) => {
@@ -66,10 +71,11 @@ async function displayWorksModal(works) {
 }
 
 // Supprimer un element
+const token = window.localStorage.getItem("Token")
+
 function deleteWork() {
 
     let listWorks = document.querySelectorAll(".work-modal")
-    const token = window.localStorage.getItem("Token")
     
     for (let work of listWorks) {
         work.addEventListener("click", async (event) => {
@@ -87,6 +93,8 @@ function deleteWork() {
                     }
                     console.log('Suppression ok')
                     work.style.display = "none"
+
+                    // rechargement de la galerie dans la page principale
                     displayWorks()
                 }
             } catch (error) {
@@ -102,8 +110,6 @@ function navModal() {
     const btnBack = document.getElementById("js-back")
 
     const btnModal = document.querySelectorAll(".nav-modal")
-    const showGallery = document.getElementById("showGallery")
-    const showAddPhoto = document.getElementById("showAddPhoto")
 
     for (let btn of btnModal) {
         btn.addEventListener("click", () => {
@@ -124,5 +130,111 @@ function navModal() {
     }
 }
 
+// Ajouter un element
+const formulairePhoto = document.querySelector(".formulaire-photo")
+
+async function generateSelectCategory() {
+    const categories = await fetchCategories()
+
+    const selectWrapper = document.querySelector(".select-wrapper")
+    let selectCateg = document.createElement("select")
+    selectCateg.setAttribute("id", "categ-photo")
+    selectCateg.setAttribute("name", "categ-photo")
+    selectCateg.setAttribute("class", "input select")
+
+    const firstSelect = document.createElement("option")
+    firstSelect.setAttribute("data-id", 0)
+    selectCateg.appendChild(firstSelect)
+
+    for (let categ of categories) {
+        let optionCateg = document.createElement("option")
+        optionCateg.innerText = categ.name
+        optionCateg.setAttribute("data-id", categ.id)
+        selectCateg.appendChild(optionCateg)
+    }
+
+    selectWrapper.appendChild(selectCateg)
+    addWork()
+}
+
+function addWork() {
+    const photoWrapper = document.querySelector(".ajout-photo")
+
+    let choosePhoto = document.querySelector("[name=choose-photo]")
+    let titlePhoto = document.querySelector("[name=title-photo]")
+    let selectCategPhoto = document.querySelector("[name=categ-photo]")
+    const submitPhoto = document.getElementById("submitPhoto")
+
+    const checkEnableSubmit = () => {
+        if (
+            choosePhoto.value && 
+            titlePhoto.value && 
+            (categPhoto != 0)
+        ) {
+            submitPhoto.removeAttribute("disabled")
+        } else {
+            submitPhoto.setAttribute("disabled", "disabled")
+        }
+    }
+
+    let categPhoto = 0
+    let newImageDiv = document.createElement("div")
+    newImageDiv.classList.add("new-image")
+    let newImageSrc = document.createElement("img")
+    
+    choosePhoto.addEventListener('change', () => {
+        let imgUrl = 'http://localhost:5678/images/' + choosePhoto.files[0].name
+        newImageSrc.src = imgUrl
+        newImageSrc.alt = ""
+        newImageDiv.appendChild(newImageSrc)
+        photoWrapper.appendChild(newImageDiv)
+        checkEnableSubmit()
+    })
+    titlePhoto.addEventListener('change', checkEnableSubmit)
+    selectCategPhoto.addEventListener('change', () => {
+        categPhoto = selectCategPhoto.options[selectCategPhoto.selectedIndex].dataset.id
+        checkEnableSubmit()
+    })
+
+    formulairePhoto.addEventListener("submit", async (event) => {
+        event.preventDefault()
+
+        let imgUrl = 'http://localhost:5678/images/' + choosePhoto.files[0].name
+        
+        const newImage = {
+            image: imgUrl,
+            title: titlePhoto.value,
+            category: categPhoto
+        }
+        const chargeUtile = JSON.stringify(newImage)
+        console.log(chargeUtile)
+
+        try {
+            const response = await fetch("http://localhost:5678/api/works", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: chargeUtile
+            })
+            //let result = await response.json()
+            if (!response.ok) {
+                throw new Error("Ajout échec")
+            }
+            console.log('Ajout ok')
+
+            displayWorks()
+
+        } catch (error) {
+            console.error("L'ajout a échoué :", error)
+        }
+
+        
+    })
+}
+
+
 displayWorksModal()
 navModal()
+generateSelectCategory()

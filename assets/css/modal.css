@@ -123,11 +123,29 @@
     color: var(--photo-txt);
 }
 
-.formulaire .select-photo {
+.new-image {
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 50%;
+    height: 100%;
+    background-color: var(--photo-bg);
+    pointer-events: none;
+}
+
+.new-image img {
+    width: auto;
+    height: 100%;
+}
+
+.formulaire .choose-photo {
     margin: 12px 0 7px;
 }
 
-.select-photo span {
+.choose-photo span {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -139,7 +157,7 @@
     font-weight: 500;
 }
 
-.select-photo input[type=file] {
+.choose-photo input[type=file] {
     position: absolute;
     top: 0;
     left: 0;

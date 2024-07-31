@@ -85,12 +85,12 @@
 			<div id="showAddPhoto">
 				<button class="btn-back nav-modal" id="js-back"><i class="fa-solid fa-arrow-left"></i><span class="hidetext">Retour à la galerie photo</span></button>
 				<h2>Ajout photo</h2>
-				<form class="formulaire">
+				<form class="formulaire formulaire-photo">
 					<div class="ajout-photo">
 						<i class="fa-regular fa-image"></i>
-						<label for="selectPhoto" class="select-photo">
+						<label for="choosePhoto" class="choose-photo">
 							<span>+ Ajouter photo</span>
-							<input type="file" id="selectPhoto">
+							<input type="file" name="choose-photo">
 						</label>
 						<p class="format">jpg, png : 4mo max</p>
 					</div>
@@ -98,14 +98,9 @@
 					<input type="text" name="title-photo" id="title-photo" class="input">
 					<label for="categ-photo">Catégorie</label>
 					<div class="select-wrapper">
-						<select name="categ-photo" id="categ-photo" class="input select">
-							<option>Objets</option>
-							<option>Appartements</option>
-							<option>Hotels & restaurants</option>
-						</select>
 					</div>
 					<div class="cta">
-						<input type="submit" value="Valider" disabled>
+						<input type="submit" id="submitPhoto" value="Valider" disabled>
 					</div>
 				</form>
 			</div>

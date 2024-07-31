@@ -19,7 +19,7 @@ function ajoutListenerLogin() {
             email: event.target.querySelector("[name=email-login]").value,
             password: event.target.querySelector("[name=pwd-login]").value
         }
-        const chargeUtile = JSON.stringify(loginId);
+        const chargeUtile = JSON.stringify(loginId)
 
         if ((loginId.email === compteId.email) && (loginId.password === compteId.password)) {
             let response = await fetch("http://localhost:5678/api/users/login", {
