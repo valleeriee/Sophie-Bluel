@@ -22,11 +22,11 @@ async function displayCategoriesButtons() {
   filtres.classList.add("filtres", "hide-logged")
   portfolio.insertBefore(filtres, gallery)
 
-  for (let i = 0; i < categories.length; i++) {
+  for (let categ of categories) {
     let filtreBtn = document.createElement("button")
 
-    filtreBtn.innerText = categories[i].name
-    filtreBtn.dataset.id = categories[i].id
+    filtreBtn.innerText = categ.name
+    filtreBtn.dataset.id = categ.id
 
     filtreBtn.classList.add("filtre-btn")
     filtres.appendChild(filtreBtn)
@@ -35,8 +35,8 @@ async function displayCategoriesButtons() {
   displayButtonReset()
 
   const filtreClick = document.querySelectorAll(".filtre-btn")
-  for (let i = 0; i < filtreClick.length; i++) {
-    filtreClick[i].addEventListener("click", function() {
+  for (let filtre of filtreClick) {
+    filtre.addEventListener("click", function() {
       sortWorks(this);
     });
   }
@@ -49,13 +49,13 @@ async function displayWorks(works) {
   }
   gallery.innerHTML = "";
 
-  for (let i = 0; i < works.length; i++) {
+  for (let work of works) {
     let figure = document.createElement("figure")
     let image = document.createElement("img")
-    image.src = works[i].imageUrl
-    image.alt = works[i].title
+    image.src = work.imageUrl
+    image.alt = work.title
     let figcaption = document.createElement("figcaption")
-    figcaption.innerText = works[i].title
+    figcaption.innerText = work.title
 
     figure.appendChild(image)
     figure.appendChild(figcaption)

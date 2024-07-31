@@ -1,4 +1,4 @@
-// Affichage de la modale
+// Affichage / fermeture de la modale
 let modal = null // let modal = null ou let modal = "" ??
 
 const btnClose = document.querySelector(".js-modal-close")
@@ -38,7 +38,6 @@ window.addEventListener("keydown", (event) => {
     }
 })
 
-
 // Affichage des travaux
 const galleryModal = document.querySelector(".gallery-modal")
 let worksModal = []
@@ -50,12 +49,13 @@ async function displayWorksModal(works) {
     galleryModal.innerHTML = ""
     const htmlDelete = `<span class="delete"><i class="fa-solid fa-trash-can"></i></span>`
   
-    for (let i = 0; i < works.length; i++) {
+    for (let work of works) {
       let div = document.createElement("div")
+      div.setAttribute("data-id", work.id)
       div.classList.add("work-modal")
       let image = document.createElement("img")
-      image.src = works[i].imageUrl
-      image.alt = works[i].title
+      image.src = work.imageUrl
+      image.alt = work.title
   
       div.innerHTML = htmlDelete
       div.appendChild(image)
@@ -69,16 +69,44 @@ async function displayWorksModal(works) {
 function deleteWork() {
 
     let listWorks = document.querySelectorAll(".work-modal")
+    const token = window.localStorage.getItem("Token")
+    console.log(listWorks)
     
-    for (let i = 0; i < listWorks.length; i++) {
-        listWorks[i].addEventListener("click", async (event) => {
-            let response = await fetch("http://localhost:5678/api/works/" + i, {
-                method: "DELETE",
-            });
-            let result = await response.json();
-            console.log(result)
+    for (let work of listWorks) {
+        work.addEventListener("click", async (event) => {
+            let workId = event.currentTarget.dataset.id
+            console.log(workId)
+
+            try {
+                const response = await fetch(`http://localhost:5678/api/works/${workId}/`, {
+                    method: "DELETE",
+                    headers: {"Authorization": `Bearer ${token}`}
+                })
+                const data = await response.json();
+                console.log(data);
+                if (!response.ok) {
+                    throw new Error("Suppression échec");
+                }
+
+                console.log('Suppression ok');
+            } catch (error) {
+                console.error("La suppression a échoué :", error);
+            }
         })
     }
 }
 
+// Ajouter un element
+function addWork() {
+    const btnNext = document.getElementById("js-next")
+    const showGallery = document.getElementById("showGallery")
+    const showAddPhoto = document.getElementById("showAddPhoto")
+
+    btnNext.addEventListener("click", () => {
+        showGallery.style.display = "none"
+        showAddPhoto.style.display = "block"
+    })
+}
+
 displayWorksModal()
+addWork()

@@ -1,10 +1,11 @@
 // chargement de la homepage logged ou non logged
+const indexBody = document.querySelector("body")
+
 window.onload = (event) => {
-    const connection = window.localStorage.getItem("Connection");
+    const connection = window.localStorage.getItem("Token");
   
     if (connection === null) return
 
-    const indexBody = document.querySelector("body")
     indexBody.classList.add("logged")
 };
 
@@ -14,8 +15,8 @@ function ajoutListenerLogout() {
     lkLogout.addEventListener("click", function (event) {
         event.preventDefault()
   
-        const connection = window.localStorage.removeItem("Connection");
-        const indexBody = document.querySelector("body")
+        const connection = window.localStorage.removeItem("Token");
+        
         indexBody.classList.remove("logged")
     });
 }
