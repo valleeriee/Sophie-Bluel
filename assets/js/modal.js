@@ -132,6 +132,7 @@ function navModal() {
 
 // Ajouter un element
 const formulairePhoto = document.querySelector(".formulaire-photo")
+const baseUrl = "http://localhost:5678/images/"
 
 async function generateSelectCategory() {
     const categories = await fetchCategories()
@@ -183,7 +184,7 @@ function addWork() {
     let newImageSrc = document.createElement("img")
     
     choosePhoto.addEventListener('change', () => {
-        let imgUrl = 'http://localhost:5678/images/' + choosePhoto.files[0].name
+        let imgUrl = baseUrl + choosePhoto.files[0].name
         newImageSrc.src = imgUrl
         newImageSrc.alt = ""
         newImageDiv.appendChild(newImageSrc)
@@ -199,8 +200,9 @@ function addWork() {
     formulairePhoto.addEventListener("submit", async (event) => {
         event.preventDefault()
 
-        let imgUrl = 'http://localhost:5678/images/' + choosePhoto.files[0].name
+        let imgUrl = baseUrl + choosePhoto.files[0].name
         
+        /*
         const newImage = {
             image: imgUrl,
             title: titlePhoto.value,
@@ -208,15 +210,20 @@ function addWork() {
         }
         const chargeUtile = JSON.stringify(newImage)
         console.log(chargeUtile)
+        */
+
+        let formData = new FormData()
+        formData.append('image', imgUrl)
+        formData.append('title', titlePhoto.value)
+        formData.append('category', categPhoto)
 
         try {
             const response = await fetch("http://localhost:5678/api/works", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
                     "Authorization": `Bearer ${token}`
                 },
-                body: chargeUtile
+                body: formData
             })
             //let result = await response.json()
             if (!response.ok) {
@@ -229,11 +236,9 @@ function addWork() {
         } catch (error) {
             console.error("L'ajout a échoué :", error)
         }
-
         
     })
 }
-
 
 displayWorksModal()
 navModal()
