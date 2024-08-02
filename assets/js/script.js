@@ -51,13 +51,16 @@ async function displayWorks(works) {
 
   for (let work of works) {
     let figure = document.createElement("figure")
+    let div = document.createElement("div")
+    div.classList.add("visuel")
     let image = document.createElement("img")
     image.src = work.imageUrl
     image.alt = work.title
     let figcaption = document.createElement("figcaption")
     figcaption.innerText = work.title
 
-    figure.appendChild(image)
+    div.appendChild(image)
+    figure.appendChild(div)
     figure.appendChild(figcaption)
     gallery.appendChild(figure)
   }

@@ -1,5 +1,5 @@
 // Affichage / fermeture de la modale
-let modal = null // let modal = null ou let modal = "" ??
+let modal
 
 const btnClose = document.querySelector(".js-modal-close")
 const stopClose = document.querySelector(".js-modal-stop")
@@ -27,7 +27,7 @@ const closeModal = (event) => {
     modal.style.display = "none"
     modal.setAttribute("aria-hidden", "none")
     modal.removeAttribute("aria-modal")
-    modal.removeEventListener("click", closeModal) // pourquoi removeEventListener ?
+    modal.removeEventListener("click", closeModal)
     btnClose.removeEventListener("click", closeModal)
     stopClose.removeEventListener("click", (event) => event.stopPropagation())
     modal = null
@@ -84,18 +84,12 @@ function deleteWork() {
             try {
                 const confirm = window.confirm("Supprimer ?")
                 if (confirm) {
-                    const response = await fetch(`http://localhost:5678/api/works/${workId}/`, {
-                        method: "DELETE",
-                        headers: {"Authorization": `Bearer ${token}`}
-                    })
-                    if (!response.ok) {
-                        throw new Error("Suppression échec")
-                    }
-                    console.log('Suppression ok')
+                    await fetchDeleteWork(workId, token)
                     work.style.display = "none"
 
                     // rechargement de la galerie dans la page principale
                     displayWorks()
+                    alert("L'élément a bien été supprimé")
                 }
             } catch (error) {
                 console.error("La suppression a échoué :", error)
@@ -132,7 +126,6 @@ function navModal() {
 
 // Ajouter un element
 const formulairePhoto = document.querySelector(".formulaire-photo")
-const baseUrl = "http://localhost:5678/images/"
 
 async function generateSelectCategory() {
     const categories = await fetchCategories()
@@ -182,59 +175,58 @@ function addWork() {
     let newImageDiv = document.createElement("div")
     newImageDiv.classList.add("new-image")
     let newImageSrc = document.createElement("img")
+
+    let validImg = false
     
     choosePhoto.addEventListener('change', () => {
-        let imgUrl = baseUrl + choosePhoto.files[0].name
+        const file = choosePhoto.files[0]
+        const fileType = file['type']
+        const validImageTypes = ['image/gif', 'image/jpeg', 'image/png']
+        if (!validImageTypes.includes(fileType)) {
+            alert("Veuillez sélectionner une image")
+            console.log("Pas une image")
+            return
+        }
+
+        validImg = true
+        let imgUrl = URL.createObjectURL(choosePhoto.files[0])
         newImageSrc.src = imgUrl
         newImageSrc.alt = ""
         newImageDiv.appendChild(newImageSrc)
         photoWrapper.appendChild(newImageDiv)
         checkEnableSubmit()
     })
-    titlePhoto.addEventListener('change', checkEnableSubmit)
+    titlePhoto.addEventListener('change', (validImg) => {
+        if (validImg) checkEnableSubmit()
+    })
     selectCategPhoto.addEventListener('change', () => {
         categPhoto = selectCategPhoto.options[selectCategPhoto.selectedIndex].dataset.id
-        checkEnableSubmit()
+        if (validImg) checkEnableSubmit()
     })
 
     formulairePhoto.addEventListener("submit", async (event) => {
         event.preventDefault()
 
-        let imgUrl = baseUrl + choosePhoto.files[0].name
-        
-        /*
-        const newImage = {
-            image: imgUrl,
-            title: titlePhoto.value,
-            category: categPhoto
-        }
-        const chargeUtile = JSON.stringify(newImage)
-        console.log(chargeUtile)
-        */
+        let imgFile = choosePhoto.files[0]
 
         let formData = new FormData()
-        formData.append('image', imgUrl)
+        formData.append('image', imgFile)
         formData.append('title', titlePhoto.value)
         formData.append('category', categPhoto)
 
         try {
-            const response = await fetch("http://localhost:5678/api/works", {
-                method: "POST",
-                headers: {
-                    "Authorization": `Bearer ${token}`
-                },
-                body: formData
-            })
-            //let result = await response.json()
-            if (!response.ok) {
-                throw new Error("Ajout échec")
-            }
-            console.log('Ajout ok')
+            await fetchAddWork(token, formData)
+
+            formulairePhoto.reset()
+            newImageDiv.remove()
+            checkEnableSubmit()
 
             displayWorks()
+            displayWorksModal()
+            closeModal(event)
 
         } catch (error) {
-            console.error("L'ajout a échoué :", error)
+            console.error("Erreur :", error)
         }
         
     })

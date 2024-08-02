@@ -225,9 +225,20 @@ nav a:hover {
 	grid-row-gap: 20px;
 }
 
-.gallery img {
+.gallery .visuel {
 	width: 100%;
+	height: 41.4vw;
+	max-height: 472px;
+}
 
+.gallery .visuel img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.gallery figcaption {
+	margin-top: 5px;
 }
 
 /* formulaires contact et login */
