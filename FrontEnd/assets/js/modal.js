@@ -80,7 +80,8 @@ function deleteWork() {
     for (let work of listWorks) {
         work.addEventListener("click", async (event) => {
             let workId = event.currentTarget.dataset.id
-
+            let workImgUrl = event.currentTarget.getElementsByTagName("img")[0]
+            
             try {
                 const confirm = window.confirm("Supprimer ?")
                 if (confirm) {
