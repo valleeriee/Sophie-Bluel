@@ -90,7 +90,6 @@ function deleteWork() {
 
                     // rechargement de la galerie dans la page principale
                     displayWorks()
-                    alert("L'élément a bien été supprimé")
                 }
             } catch (error) {
                 console.error("La suppression a échoué :", error)

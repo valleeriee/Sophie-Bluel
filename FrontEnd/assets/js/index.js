@@ -2,7 +2,7 @@
 const indexBody = document.querySelector("body")
 
 window.onload = (event) => {
-    const connection = window.localStorage.getItem("Token");
+    const connection = localStorage.getItem("Token");
   
     if (connection === null) return
 
@@ -15,7 +15,7 @@ function ajoutListenerLogout() {
     lkLogout.addEventListener("click", function (event) {
         event.preventDefault()
   
-        const connection = window.localStorage.removeItem("Token");
+        localStorage.removeItem("Token");
         
         indexBody.classList.remove("logged")
     });

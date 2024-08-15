@@ -48,5 +48,4 @@ async function fetchAddWork(token, formData) {
   }
   const result = await response.json()
   console.log("Ajout ok")
-  alert("L'élément a bien été ajouté")
 }

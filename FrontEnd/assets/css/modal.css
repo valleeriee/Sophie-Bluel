@@ -192,13 +192,14 @@
     display: block;
 }
 
+/* suppression du fond bleu pour les champs de formulaire en autofill */
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 
 input:-webkit-autofill:focus, 
 input:-webkit-autofill:active  {
-    color : var(--primary-color) !important;
-    -webkit-text-fill-color: var(--primary-color) !important;
-    -webkit-box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09), 0 0 0 1000px white inset !important;
-    -webkit-background-clip: text !important;
-    background-clip: text !important;
+    color : var(--primary-color);
+    -webkit-text-fill-color: var(--primary-color);
+    -webkit-box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09), 0 0 0 1000px white inset;
+    -webkit-background-clip: text;
+    background-clip: text;
 }

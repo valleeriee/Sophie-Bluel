@@ -29,8 +29,8 @@ function ajoutListenerLogin() {
             })
             let result = await response.json();
             let token = result['token'];
-            window.localStorage.setItem("Token", token)
-            window.location.href = "index.html"
+            localStorage.setItem("Token", token)
+            window.location = "index.html"
         } else {
             const erreur = document.createElement("p")
             erreur.innerText = "Erreur dans l’identifiant ou le mot de passe"

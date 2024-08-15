@@ -13,8 +13,6 @@ function displayButtonReset() {
 // Affichage des filtres
 async function displayCategoriesButtons() {
   const categories = await fetchCategories()
-
-  // Utilisation de l'objet Set ? const categoriesSet = new Set(categories);
   
   const portfolio = document.getElementById("portfolio")
   
