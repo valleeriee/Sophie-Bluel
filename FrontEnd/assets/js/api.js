@@ -1,20 +1,20 @@
 // Récupération des catégories
 async function fetchCategories() {
-    const reponse = await fetch('http://localhost:5678/api/categories/')
-    if (reponse.ok) {
-      return await reponse.json();
-    } else {
-      return []
+    try {
+      const reponse = await fetch('http://localhost:5678/api/categories/')
+      return await reponse.json()
+    } catch {
+      console.log('Erreur au chargement des catégories')
     }
 }
 
 // Récupération des travaux
 async function fetchWorks() {
-    const reponse = await fetch('http://localhost:5678/api/works/')
-    if (reponse.ok) {
-      return await reponse.json();
-    } else {
-      return []
+    try {
+      const reponse = await fetch('http://localhost:5678/api/works/')
+      return await reponse.json()
+    } catch {
+      console.log('Erreur au chargement de la galerie')
     }
 }
 
@@ -42,6 +42,7 @@ async function fetchAddWork(token, formData) {
     },
     body: formData
   })
+  
   if (!response.ok) {
       alert("L'ajout a échoué")
       throw new Error("L'ajout a échoué")

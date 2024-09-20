@@ -79,6 +79,7 @@ function deleteWork() {
     
     for (let work of listWorks) {
         work.addEventListener("click", async (event) => {
+            event.preventDefault()
             let workId = event.currentTarget.dataset.id
             let workImgUrl = event.currentTarget.getElementsByTagName("img")[0]
             
@@ -86,11 +87,12 @@ function deleteWork() {
                 const confirm = window.confirm("Supprimer ?")
                 if (confirm) {
                     await fetchDeleteWork(workId, token)
-                    work.style.display = "none"
 
                     // rechargement de la galerie dans la page principale
                     displayWorks()
+                    displayWorksModal()
                 }
+                
             } catch (error) {
                 console.error("La suppression a échoué :", error)
             }
